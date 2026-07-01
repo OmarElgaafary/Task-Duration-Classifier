@@ -2,3 +2,7 @@
 /EDA_testing/
 /data/processed/jira_issues_cleaned.csv
 /data/processed/final_cleaned.csv
+/data/processed/final_cleaned_sample.csv
+.venv/
+sklearn-env/
+__pycache__/
