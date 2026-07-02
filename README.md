@@ -132,8 +132,7 @@ model_tests/confusion_matrix.png
 Current test accuracy is approximately:
 
 ```text
-Accuracy: 0.43
-Weighted F1: 0.42
+Accuracy: 0.45
 ```
 
 The confusion matrix is especially useful here because the classes are ordered. A wrong prediction may still be operationally useful if it lands one step away, such as `Short` predicted as `Standard`.
