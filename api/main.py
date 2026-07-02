@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 
 app = FastAPI(title="Task Time Predictor API", description="API for predicting task duration categories based on task details.", version="1.0")
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-MODEL_PATH = PROJECT_ROOT / "models" / "duration_classifier.joblib"
+MODEL_PATH = PROJECT_ROOT / "models" / "duration_logistic_regression_classifier.joblib"
 
 try:
     model = joblib.load(MODEL_PATH)

@@ -1,0 +1,7 @@
+/jira_ticket_dataset.csv
+/data/processed/final_cleaned.csv
+/data/processed/jira_issues_cleaned.csv
+.venv/
+venv/
+*.pyc
+__pycache__/
