@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pandas as pd
 import joblib
 
@@ -11,7 +13,22 @@ from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 
 
-df = pd.read_csv("data/processed/final_cleaned.csv")
+BASE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = BASE_DIR.parent
+
+dataset_path = PROJECT_ROOT / "data" / "processed" / "final_cleaned.csv"
+model_metric_test_path = PROJECT_ROOT / "model_tests"
+models_dir = PROJECT_ROOT / "models"
+
+model_metric_test_path.mkdir(parents=True, exist_ok=True)
+models_dir.mkdir(parents=True, exist_ok=True)
+
+if not dataset_path.exists():
+    raise FileNotFoundError("Dataset not found.")
+
+dataset_path = PROJECT_ROOT / "data" / "processed" / "final_cleaned.csv"
+
+df = pd.read_csv(dataset_path)
 
 df["total_text"] = (df["summary"].fillna("").astype(str) + " " + df["description"].fillna("").astype(str))
 
@@ -71,44 +88,37 @@ model = Pipeline(
         (
             "classifier",
             LogisticRegression(
-                max_iter=1000,
-                class_weight="balanced",
-                n_jobs=-1,
-            ),
+                C=5.0,
+                solver="saga",
+                penalty="l2",
+                max_iter=5000,
+                class_weight=None,
+                random_state=42,
+            )
         ),
     ]
 )
 
-# Model training 
-
+# Train
 model.fit(x_train, y_train)
 
+# Evaluate
 y_pred = model.predict(x_test)
 
 report = classification_report(y_test, y_pred)
 print(report)
 
-# Save report
-with open("../reports/classification_report.txt", "w") as f:
+with open(model_metric_test_path / "classification_report.txt", "w", encoding="utf-8") as f:
     f.write(report)
 
-# Confusion matrix
-ConfusionMatrixDisplay.from_predictions(
-    y_test,
-    y_pred,
-    xticks_rotation=45
-)
+ConfusionMatrixDisplay.from_predictions(y_test, y_pred, xticks_rotation=45)
 
 plt.title("Confusion Matrix")
 plt.tight_layout()
-plt.savefig("../reports/confusion_matrix.png")
-plt.show()
+plt.savefig(model_metric_test_path / "confusion_matrix.png", dpi=300)
+plt.close()
 
-# Save full pipeline
-joblib.dump(
-    model,
-    "../models/duration_classifier.joblib",
-    compress=3
-)
+# Save model
+joblib.dump(model, models_dir / "duration_logistic_regression_classifier.joblib", compress=3)
 
 print("Model saved.")
