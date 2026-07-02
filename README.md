@@ -105,10 +105,10 @@ Request:
 
 ```json
 {
-  "summary": "Fix login timeout bug",
-  "description": "Users are being logged out after resetting their password.",
+  "summary": " Fix Cross-Origin Resource Sharing (CORS) error on /api/v2/users endpoint",
+  "description": "Frontend requests to /api/v2/users are currently failing in the production environment due to a missing Access-Control-Allow-Origin header in the API response.",
   "issuetype_name": "Bug",
-  "priority_name": "Major"
+  "priority_name": "High"
 }
 ```
 
