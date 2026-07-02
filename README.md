@@ -46,7 +46,7 @@ Task-Time-Predictor/
 Clone or update the repository:
 
 ```powershell
-git clone <repo-url>
+git clone https://github.com/OmarElgaafary/Task-Duration-Classifier
 cd Task-Time-Predictor
 git pull
 ```
@@ -105,10 +105,10 @@ Request:
 
 ```json
 {
-  "summary": "Fix login timeout bug",
-  "description": "Users are being logged out after resetting their password.",
+  "summary": " Fix Cross-Origin Resource Sharing (CORS) error on /api/v2/users endpoint",
+  "description": "Frontend requests to /api/v2/users are currently failing in the production environment due to a missing Access-Control-Allow-Origin header in the API response.",
   "issuetype_name": "Bug",
-  "priority_name": "Major"
+  "priority_name": "High"
 }
 ```
 
@@ -137,6 +137,8 @@ Weighted F1: 0.42
 ```
 
 The confusion matrix is especially useful here because the classes are ordered. A wrong prediction may still be operationally useful if it lands one step away, such as `Short` predicted as `Standard`.
+
+<img width="1920" height="1440" alt="confusion_matrix" src="https://github.com/user-attachments/assets/e0c89d8e-09e8-4235-bb5e-1a6eb917a643" />
 
 ## Future Improvements
 
