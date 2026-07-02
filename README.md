@@ -1,4 +1,4 @@
-# Task Time Predictor *(Beta Version)*
+# Task Time Predictor (Beta Version)
 
 > Predict whether a software issue is likely to be **Short**, **Standard**, or **Long-running** based on its summary, description, priority, and issue type.
 
