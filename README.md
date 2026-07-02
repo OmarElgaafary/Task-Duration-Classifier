@@ -46,7 +46,7 @@ Task-Time-Predictor/
 Clone or update the repository:
 
 ```powershell
-git clone <repo-url>
+git clone https://github.com/OmarElgaafary/Task-Duration-Classifier
 cd Task-Time-Predictor
 git pull
 ```
