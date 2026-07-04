@@ -47,20 +47,20 @@ Clone or update the repository:
 
 ```powershell
 git clone https://github.com/OmarElgaafary/Task-Duration-Classifier
-cd Task-Time-Predictor
+cd Task-Duration-Classifier
 git pull
 ```
 
 Build the Docker image:
 
 ```powershell
-docker build -t task-time-predictor .
+docker build -t task-duration-classifier .
 ```
 
 Run the API container:
 
 ```powershell
-docker run --rm -p 8000:8000 task-time-predictor
+docker run --rm -p 8000:8000 task-duration-classifier
 ```
 
 Open the interactive API docs:
