@@ -40,5 +40,14 @@ async def predict_task_time(task: TaskInput):
     }])
 
     prediction = model.predict(features)[0]
+    probabilities = model.predict_proba(features)[0]
 
-    return {"duration_category": prediction}    
+    class_probabilities = {
+        str(class_name): float(probability)
+        for class_name, probability in zip(model.classes_, probabilities)
+    }
+
+    return {
+        "duration_category": prediction,
+        "probabilities": class_probabilities,
+    }

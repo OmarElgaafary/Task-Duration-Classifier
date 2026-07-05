@@ -81,6 +81,12 @@ preprocessor = ColumnTransformer(
     ]
 )
 
+# class_weight={
+#     "Short": 1.0,
+#     "Standard": 1.0,
+#     "Long-running": 1.5,
+# }
+
 # Model pipeline
 model = Pipeline(
     steps=[
@@ -88,10 +94,10 @@ model = Pipeline(
         (
             "classifier",
             LogisticRegression(
-                C=5.0,
+                C=1.0,
                 solver="saga",
                 penalty="l2",
-                max_iter=5000,
+                max_iter=3000,
                 class_weight=None,
                 random_state=42,
             )

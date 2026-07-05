@@ -1,16 +1,16 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Python application
+name: task-time-predictor-pipeline
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "**" ]
   pull_request:
     branches: [ "master" ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 3.10
+    - name: Set up Python 3.14
       uses: actions/setup-python@v3
       with:
         python-version: "3.14"
@@ -34,3 +34,43 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+  update-readme-accuracy:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Update README accuracy from classification report
+      run: |
+        python - <<'PY'
+        from pathlib import Path
+        import re
+
+        report_path = Path("model_tests/classification_report.txt")
+        readme_path = Path("README.md")
+
+        report = report_path.read_text(encoding="utf-8")
+        match = re.search(r"^\s*accuracy\s+([0-9]*\.?[0-9]+)\s+\d+\s*$", report, re.MULTILINE)
+        if not match:
+            raise SystemExit(f"Could not find accuracy row in {report_path}")
+
+        accuracy = match.group(1)
+        readme = readme_path.read_text(encoding="utf-8")
+        updated, replacements = re.subn(r"Accuracy:\s*[0-9]*\.?[0-9]+", f"Accuracy: {accuracy}", readme)
+        if replacements == 0:
+            raise SystemExit("Could not find an Accuracy line to update in README.md")
+
+        readme_path.write_text(updated, encoding="utf-8")
+        PY
+    - name: Commit README accuracy update
+      run: |
+        if git diff --quiet README.md; then
+          echo "README accuracy is already up to date."
+          exit 0
+        fi
+
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add README.md
+        git commit -m "job: update-readme-accuracy"
+        git push origin main
