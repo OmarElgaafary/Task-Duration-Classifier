@@ -28,15 +28,28 @@ async def root():
 async def predict_task_time(task: TaskInput):
     summary = task.summary or ""
     description = task.description or ""
+    summary_word_count = len(summary.split())
+    description_word_count = len(description.split())
+    summary_to_description_word_ratio = (
+        summary_word_count / description_word_count
+        if description_word_count
+        else summary_word_count
+    )
+    issue_priority = f"{task.issuetype_name}__{task.priority_name}"
 
     features = pd.DataFrame([{
+        "summary_text": summary,
+        "description_text": description,
         "total_text": f"{summary} {description}",
         "priority_name": task.priority_name,
         "issuetype_name": task.issuetype_name,
+        "issue_priority": issue_priority,
         "summary_char_count": len(summary),
-        "summary_word_count": len(summary.split()),
+        "summary_word_count": summary_word_count,
         "description_char_count": len(description),
-        "description_word_count": len(description.split()),
+        "description_word_count": description_word_count,
+        "has_description": int(description_word_count > 0),
+        "summary_to_description_word_ratio": summary_to_description_word_ratio,
     }])
 
     prediction = model.predict(features)[0]
