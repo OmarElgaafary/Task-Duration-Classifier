@@ -8,7 +8,7 @@
 ![Docker](https://img.shields.io/badge/Deploy-Docker-informational)
 ![HuggingFace](https://img.shields.io/badge/-HuggingFace-3B4252?style=flat&logo=huggingface&logoColor=)
 
-🤗 **Hugging Face:** https://huggingface.co/<your-username>/<model-name>
+🤗 **Hugging Face:** https://huggingface.co/omaradly/jira-task-duration-classifier
 
 📊 **Kaggle Dataset:** https://www.kaggle.com/datasets/tedlozzo/apaches-jira-issues
 
