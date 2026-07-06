@@ -1,10 +1,18 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import joblib
 import pandas as pd
 from pathlib import Path
 from pydantic import BaseModel, Field
 
 app = FastAPI(title="Task Time Predictor API", description="API for predicting task duration categories based on task details.", version="1.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MODEL_PATH = PROJECT_ROOT / "models" / "duration_logistic_regression_classifier.joblib"
 
@@ -22,7 +30,19 @@ class TaskInput(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the Task Time Predictor API!"}
+    return {
+        "name": "Task Time Predictor API",
+        "description": "API for predicting task duration categories based on task details.",
+        "status": "Running",
+        "model": {
+            "type": "Logistic Regression",
+            "classes": ["Short", "Standard", "Long-running"],
+        },
+        "endpoints": {
+            "root": "/",
+            "predict": "/predict",
+        },
+    }
 
 @app.post("/predict")
 async def predict_task_time(task: TaskInput):
