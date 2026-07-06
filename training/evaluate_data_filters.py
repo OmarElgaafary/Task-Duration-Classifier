@@ -91,17 +91,15 @@ def apply_group_consistency(df, group_columns, min_group_size, min_category_shar
 
 
 def balance_classes(df, max_rows_per_project_class, random_state=42):
-    capped_parts = []
-    for _, project_class_df in df.groupby(
-        ["project_key", "duration_category"],
-        observed=True,
-    ):
-        capped_parts.append(
-            project_class_df.sample(
-                n=min(len(project_class_df), max_rows_per_project_class),
+    capped = (
+        df.groupby(["project_key", "duration_category"], group_keys=False, observed=True)
+        .apply(
+            lambda group: group.sample(
+                n=min(len(group), max_rows_per_project_class),
                 random_state=random_state,
             )
-        )
+        ).reset_index(drop=True)
+    )
 
     capped = pd.concat(capped_parts, ignore_index=True)
 
@@ -221,10 +219,10 @@ def main():
     base_df = load_base_data()
     configs = [
         {
-            "name": "project_issue_share_33_100k",
+            "name": "project_issue_share_35",
             "windows": (2.25, 4, 14, 20),
-            "group": (["project_key", "issuetype_name"], 20, 0.33),
-            "project_cap": 3_000,
+              "group": (["project_key", "issuetype_name"], 25, 0.35),
+            "project_cap": 1_500,
         },
         {
             "name": "project_issue_share_38",
