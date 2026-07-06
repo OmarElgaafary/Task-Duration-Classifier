@@ -1,0 +1,25 @@
+{
+	"builds": [
+		{
+			"src": "ui/package.json",
+			"use": "@vercel/static-build",
+			"config": {
+				"distDir": "dist"
+			}
+		},
+		{
+			"src": "api/main.py",
+			"use": "@vercel/python"
+		}
+	],
+	"routes": [
+		{
+			"src": "/api/(.*)",
+			"dest": "api/main.py"
+		},
+		{
+			"src": "/(.*)",
+			"dest": "/index.html"
+		}
+	]
+}

@@ -7,5 +7,4 @@
 sklearn-env/
 __pycache__/
 /ui/node_modules
-.vercel
 .env*
