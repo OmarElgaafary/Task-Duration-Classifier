@@ -101,8 +101,7 @@ def balance_classes(df, max_rows_per_project_class, random_state=42):
         ).reset_index(drop=True)
     )
 
-    capped = pd.concat(capped_parts, ignore_index=True)
-
+    
     class_counts = capped["duration_category"].value_counts()
     target_size = int(class_counts.min())
     balanced = pd.concat(
