@@ -8,8 +8,9 @@
 ![Docker](https://img.shields.io/badge/Deploy-Docker-informational)
 ![HuggingFace](https://img.shields.io/badge/-HuggingFace-3B4252?style=flat&logo=huggingface&logoColor=)
 
-Model published on HuggingFace: https://huggingface.co/omaradly/jira-task-duration-classifier
-Apache JIRA issues dataset: https://www.kaggle.com/datasets/tedlozzo/apaches-jira-issues/data?select=issues.csv
+🤗 **Hugging Face:** https://huggingface.co/<your-username>/<model-name>
+
+📊 **Kaggle Dataset:** https://www.kaggle.com/datasets/tedlozzo/apaches-jira-issues
 
 ## Project Goal
 
