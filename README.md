@@ -137,7 +137,7 @@ Accuracy: 0.65
 
 The confusion matrix is especially useful here because the classes are ordered. A wrong prediction may still be operationally useful if it lands one step away, such as `Short` predicted as `Standard`.
 
-<img width="1920" height="1440" alt="confusion_matrix" src="https://github.com/user-attachments/assets/e0c89d8e-09e8-4235-bb5e-1a6eb917a643" />
+<img width="1920" height="1440" alt="confusion_matrix" src="https://github.com/user-attachments/assets/73cbfae4-805d-4a8c-80c6-119612b6bca3" />
 
 ## Future Improvements
 
