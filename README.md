@@ -6,6 +6,10 @@
 ![FastAPI](https://img.shields.io/badge/API-FastAPI-green)
 ![Model](https://img.shields.io/badge/Model-Logistic%20Regression-purple)
 ![Docker](https://img.shields.io/badge/Deploy-Docker-informational)
+![HuggingFace](https://img.shields.io/badge/-HuggingFace-3B4252?style=flat&logo=huggingface&logoColor=)
+
+Model published on HuggingFace: https://huggingface.co/omaradly/jira-task-duration-classifier
+Apache JIRA issues dataset: https://www.kaggle.com/datasets/tedlozzo/apaches-jira-issues/data?select=issues.csv
 
 ## Project Goal
 
