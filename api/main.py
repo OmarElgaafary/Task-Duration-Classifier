@@ -28,8 +28,7 @@ class TaskInput(BaseModel):
     priority_name: str = Field(default="unknown")
 
 
-@app.get("/")
-async def root():
+def api_metadata():
     return {
         "name": "Task Time Predictor API",
         "description": "API for predicting task duration categories based on task details.",
@@ -40,9 +39,20 @@ async def root():
         },
         "endpoints": {
             "root": "/",
+            "health": "/health",
             "predict": "/predict",
         },
     }
+
+
+@app.get("/")
+async def root():
+    return api_metadata()
+
+
+@app.get("/health")
+async def health():
+    return api_metadata()
 
 @app.post("/predict")
 async def predict_task_time(task: TaskInput):
@@ -84,3 +94,4 @@ async def predict_task_time(task: TaskInput):
         "duration_category": prediction,
         "probabilities": class_probabilities,
     }
+

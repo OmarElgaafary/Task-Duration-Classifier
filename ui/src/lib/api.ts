@@ -1,6 +1,8 @@
-export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") || "";
+const DEFAULT_API_BASE_URL = import.meta.env.DEV ? "http://localhost:8000" : "";
 
+export const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL
+).replace(/\/$/, "");
 export type DurationClass = "Short" | "Standard" | "Long-running";
 
 export type HomeMetadata = {
@@ -44,7 +46,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export function getHomeMetadata() {
-  return request<HomeMetadata>("/");
+  return request<HomeMetadata>("/health");
 }
 
 export function predictTaskDuration(payload: PredictRequest) {

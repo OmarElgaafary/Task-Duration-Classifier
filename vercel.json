@@ -1,5 +1,12 @@
 {
+  "installCommand": "cd ui && npm ci",
+  "buildCommand": "cd ui && npm run build",
+  "outputDirectory": "ui/dist",
   "rewrites": [
+    {
+      "source": "/health",
+      "destination": "/api/main.py"
+    },
     {
       "source": "/predict",
       "destination": "/api/main.py"
@@ -11,6 +18,10 @@
     {
       "source": "/openapi.json",
       "destination": "/api/main.py"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
