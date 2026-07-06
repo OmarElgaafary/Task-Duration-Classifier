@@ -7,6 +7,10 @@
 ![Model](https://img.shields.io/badge/Model-Logistic%20Regression-purple)
 ![Docker](https://img.shields.io/badge/Deploy-Docker-informational)
 
+🤗 **Hugging Face:** https://huggingface.co/omaradly/jira-task-duration-classifier
+
+📊 **Kaggle Dataset:** https://www.kaggle.com/datasets/tedlozzo/apaches-jira-issues
+
 ## Project Goal
 
 This project turns cleaned Jira-style issue data into a deployed FastAPI service that predicts task duration categories. The goal is not exact day prediction, but a useful ordinal estimate:
