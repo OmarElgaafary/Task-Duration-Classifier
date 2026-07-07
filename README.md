@@ -288,7 +288,9 @@ Long-running       0.79      0.71      0.74      6771
 weighted avg       0.80      0.80      0.80     20315
 ```
 
-<img width="2270" height="1998" alt="confusion_matrix" src="https://github.com/user-attachments/assets/64cc07c3-7137-48cc-b519-52b22a34bddf" />
+<img width="1920" height="1440" alt="confusion_matrix" src="https://github.com/user-attachments/assets/35d31196-a993-48bc-9365-c387aaf57595" />
+
+<img width="3000" height="1800" alt="classification_metrics_by_class" src="https://github.com/user-attachments/assets/c88fe771-9f16-4d4e-ad6a-37878d1a5ade" />
 
 ## Future Improvements
 
