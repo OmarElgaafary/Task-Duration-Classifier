@@ -29,8 +29,12 @@ def parse_allowed_origins():
         if origin.strip()
     }
 
-    vercel_url = os.getenv("VERCEL_URL", "").strip().rstrip("/")
-    if vercel_url:
+    vercel_urls = {
+        os.getenv("VERCEL_URL", ""),
+        os.getenv("VERCEL_BRANCH_URL", ""),
+        os.getenv("VERCEL_PROJECT_PRODUCTION_URL", ""),
+    }
+    for vercel_url in {url.strip().rstrip("/") for url in vercel_urls if url.strip()}:
         configured_origins.add(
             vercel_url if vercel_url.startswith("http") else f"https://{vercel_url}"
         )
@@ -114,6 +118,19 @@ def request_origin(request):
     return origin_from_url(request.headers.get("referer"))
 
 
+def request_base_origin(request):
+    forwarded_proto = request.headers.get("x-forwarded-proto", "")
+    forwarded_host = request.headers.get("x-forwarded-host", "")
+    proto = forwarded_proto.split(",", 1)[0].strip() or request.url.scheme
+    host = forwarded_host.split(",", 1)[0].strip() or request.headers.get("host")
+    return f"{proto}://{host}".rstrip("/") if host else None
+
+
+def is_allowed_request_origin(request):
+    origin = request_origin(request)
+    return bool(origin and (origin in ALLOWED_ORIGINS or origin == request_base_origin(request)))
+
+
 def client_key(request):
     forwarded_for = request.headers.get("x-forwarded-for", "")
     if forwarded_for:
@@ -131,8 +148,7 @@ def enforce_predict_security(request):
     if content_length_value > MAX_PREDICT_CONTENT_LENGTH:
         raise HTTPException(status_code=413, detail="Prediction request is too large.")
 
-    origin = request_origin(request)
-    if not origin or origin not in ALLOWED_ORIGINS:
+    if not is_allowed_request_origin(request):
         raise HTTPException(
             status_code=403,
             detail="Use the deployed app or its Swagger docs page to submit predictions.",
