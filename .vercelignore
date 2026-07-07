@@ -1,0 +1,36 @@
+# Local environments and caches
+.venv/
+venv/
+sklearn-env/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Frontend dependencies and generated build output
+ui/node_modules/
+ui/dist/
+
+# Raw, processed, and sample datasets are not needed at inference time
+jira_ticket_dataset.csv
+data/
+
+# Notebook and training-only assets
+notebooks/
+training/
+model_tests/
+
+# Container/local deployment files
+Dockerfile
+.dockerignore
+
+# Local Vercel state and env files
+.vercel/
+.env
+.env.local
+
+# Development metadata
+.git/
+.github/
+.gitignore
