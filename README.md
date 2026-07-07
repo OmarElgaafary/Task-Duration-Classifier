@@ -306,7 +306,7 @@ Long-running       0.62      0.57      0.59      3685
 weighted avg       0.65      0.65      0.65     11057
 ```
 
-The confusion matrix is available at `model_tests/confusion_matrix.png` and is also copied into the frontend assets for display.
+<img width="2270" height="1998" alt="confusion_matrix" src="https://github.com/user-attachments/assets/64cc07c3-7137-48cc-b519-52b22a34bddf" />
 
 ## Future Improvements
 
