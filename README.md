@@ -246,6 +246,32 @@ http://localhost:8000/docs
 
 Large raw and generated datasets are excluded from the Docker build context through `.dockerignore`.
 
+## Vercel Deployment And API Safety
+
+`vercel.json` builds the React app from `ui/` and rewrites API routes such as `/health`, `/predict`, `/docs`, and `/openapi.json` to the FastAPI app.
+
+For production, set these Vercel environment variables:
+
+```text
+ALLOWED_ORIGINS=https://your-vercel-app.vercel.app
+RATE_LIMIT_MAX_REQUESTS=20
+RATE_LIMIT_WINDOW_SECONDS=60
+RATE_LIMIT_MAX_CLIENTS=2000
+MAX_PREDICT_CONTENT_LENGTH=8000
+```
+
+`VERCEL_URL` is also read automatically when Vercel provides it. Add `ALLOWED_ORIGINS` explicitly if using a production domain or a custom domain.
+
+The `/predict` endpoint includes basic public-demo safeguards:
+
+- bounded input sizes for summary, description, categorical fields, and numeric metadata
+- CORS restricted to configured origins instead of `*`
+- origin/referer checks so browser users submit through the deployed app or Swagger docs page
+- lightweight per-client rate limiting for prediction requests
+- request body size rejection before model inference
+
+These checks reduce casual spam for public sharing, but they are not a replacement for authentication, bot protection, or paid-provider rate limits.
+
 ## GitHub Actions
 
 The repository includes two automation files:

@@ -10,8 +10,7 @@ import {
   Server,
   Sparkles,
   Sun,
-  Terminal,
-  Wand2
+  Terminal
 } from "lucide-react";
 import {
   Bar,

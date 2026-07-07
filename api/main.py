@@ -1,6 +1,8 @@
+import logging
 import os
 import time
 from collections import defaultdict
+from functools import lru_cache
 from fastapi import FastAPI
 from fastapi import HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,9 +10,16 @@ import joblib
 import pandas as pd
 from pathlib import Path
 from pydantic import BaseModel, Field, field_validator
+from starlette.concurrency import run_in_threadpool
 from urllib.parse import urlsplit
 
-app = FastAPI(title="Task Time Predictor API", description="API for predicting task duration categories based on task details.", version="1.0")
+logger = logging.getLogger(__name__)
+
+app = FastAPI(
+    title="Task Time Predictor API",
+    description="API for predicting task duration categories based on task details.",
+    version="1.0",
+)
 
 
 def parse_allowed_origins():
@@ -53,10 +62,13 @@ app.add_middleware(
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MODEL_PATH = PROJECT_ROOT / "models" / "duration_logistic_regression_classifier.joblib"
 
-try:
-    model = joblib.load(MODEL_PATH)
-except Exception as e:
-    raise RuntimeError(f"Failed to load model file: {e}")
+
+@lru_cache(maxsize=1)
+def load_model():
+    if not MODEL_PATH.exists():
+        raise RuntimeError(f"Model file not found at {MODEL_PATH}")
+    return joblib.load(MODEL_PATH)
+
 
 class TaskInput(BaseModel):
     summary: str = Field(..., min_length=1, max_length=300)
@@ -179,6 +191,18 @@ async def root():
 async def health():
     return api_metadata()
 
+
+def run_prediction(features):
+    model = load_model()
+    prediction = model.predict(features)[0]
+    probabilities = model.predict_proba(features)[0]
+    class_probabilities = {
+        str(class_name): float(probability)
+        for class_name, probability in zip(model.classes_, probabilities)
+    }
+    return str(prediction), class_probabilities
+
+
 @app.post("/predict")
 async def predict_task_time(task: TaskInput, request: Request):
     enforce_predict_security(request)
@@ -217,13 +241,17 @@ async def predict_task_time(task: TaskInput, request: Request):
         "summary_to_description_word_ratio": summary_to_description_word_ratio,
     }])
 
-    prediction = model.predict(features)[0]
-    probabilities = model.predict_proba(features)[0]
-
-    class_probabilities = {
-        str(class_name): float(probability)
-        for class_name, probability in zip(model.classes_, probabilities)
-    }
+    try:
+        prediction, class_probabilities = await run_in_threadpool(
+            run_prediction,
+            features,
+        )
+    except Exception as e:
+        logger.exception("Prediction failed")
+        raise HTTPException(
+            status_code=503,
+            detail="Prediction service is temporarily unavailable.",
+        ) from e
 
     return {
         "duration_category": prediction,
