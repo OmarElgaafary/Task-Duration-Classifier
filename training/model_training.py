@@ -26,8 +26,6 @@ models_dir.mkdir(parents=True, exist_ok=True)
 if not dataset_path.exists():
     raise FileNotFoundError("Dataset not found.")
 
-dataset_path = PROJECT_ROOT / "data" / "processed" / "final_cleaned.csv"
-
 df = pd.read_csv(dataset_path)
 
 df["total_text"] = (df["summary"].fillna("").astype(str) + " " + df["description"].fillna("").astype(str))
@@ -80,12 +78,6 @@ preprocessor = ColumnTransformer(
         ),
     ]
 )
-
-# class_weight={
-#     "Short": 1.0,
-#     "Standard": 1.0,
-#     "Long-running": 1.5,
-# }
 
 # Model pipeline
 model = Pipeline(
