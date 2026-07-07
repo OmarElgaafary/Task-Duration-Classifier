@@ -246,22 +246,6 @@ http://localhost:8000/docs
 
 Large raw and generated datasets are excluded from the Docker build context through `.dockerignore`.
 
-## Vercel Deployment
-
-`vercel.json` is configured for the full-stack deployment shape:
-
-- install command: `cd ui && npm ci`
-- build command: `cd ui && npm run build`
-- output directory: `ui/dist`
-- frontend fallback: `/(.*)` rewrites to `/index.html`
-- API rewrites:
-  - `/health` -> `/api/main.py`
-  - `/predict` -> `/api/main.py`
-  - `/docs` -> `/api/main.py`
-  - `/openapi.json` -> `/api/main.py`
-
-This lets the Vite frontend and FastAPI routes live in the same deployed project.
-
 ## GitHub Actions
 
 The repository includes two automation files:
@@ -318,7 +302,7 @@ Long-running       0.79      0.71      0.74      6771
 weighted avg       0.80      0.80      0.80     20315
 ```
 
-The confusion matrix is available at `model_tests/confusion_matrix.png` and is also copied into the frontend assets for display.
+<img width="2270" height="1998" alt="confusion_matrix" src="https://github.com/user-attachments/assets/64cc07c3-7137-48cc-b519-52b22a34bddf" />
 
 ## Future Improvements
 
