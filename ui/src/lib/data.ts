@@ -3,44 +3,44 @@ import type { ChartConfig } from "@/components/ui/chart";
 export const durationClasses = ["Short", "Standard", "Long-running"] as const;
 
 export const issueTypes = [
-  { name: "Bug", count: 23451, percent: 42.42 },
-  { name: "Improvement", count: 12990, percent: 23.50 },
-  { name: "Sub-task", count: 8588, percent: 15.54 },
-  { name: "Task", count: 5065, percent: 9.16 },
-  { name: "New Feature", count: 3452, percent: 6.24 },
-  { name: "Test", count: 620, percent: 1.12 }
+  { name: "Bug", count: 43753, percent: 43.08 },
+  { name: "Improvement", count: 23849, percent: 23.48 },
+  { name: "Sub-task", count: 15924, percent: 15.68 },
+  { name: "Task", count: 8600, percent: 8.47 },
+  { name: "New Feature", count: 5888, percent: 5.80 },
+  { name: "Test", count: 1265, percent: 1.25 }
 ];
 
 export const priorities = [
-  { name: "Major", count: 38731, percent: 70.06 },
-  { name: "Minor", count: 8912, percent: 16.12 },
-  { name: "Critical", count: 2147, percent: 3.88 },
-  { name: "Blocker", count: 1979, percent: 3.58 },
-  { name: "Trivial", count: 1537, percent: 2.78 },
-  { name: "Unknown", count: 722, percent: 1.31 }
+  { name: "Major", count: 70579, percent: 69.49 },
+  { name: "Minor", count: 16821, percent: 16.56 },
+  { name: "Critical", count: 4049, percent: 3.99 },
+  { name: "Blocker", count: 3825, percent: 3.77 },
+  { name: "Trivial", count: 2810, percent: 2.77 },
+  { name: "Normal", count: 994, percent: 0.98 }
 ];
 
 export const classificationMetrics = [
   {
     className: "Long-running",
-    precision: 0.62,
-    recall: 0.57,
-    f1: 0.59,
-    support: 3685
+    precision: 0.79,
+    recall: 0.71,
+    f1: 0.74,
+    support: 6771
   },
   {
     className: "Short",
-    precision: 0.66,
-    recall: 0.76,
-    f1: 0.70,
-    support: 3686
+    precision: 0.85,
+    recall: 0.87,
+    f1: 0.86,
+    support: 6772
   },
   {
     className: "Standard",
-    precision: 0.66,
-    recall: 0.62,
-    f1: 0.64,
-    support: 3686
+    precision: 0.76,
+    recall: 0.81,
+    f1: 0.79,
+    support: 6772
   }
 ];
 
@@ -49,22 +49,22 @@ export const aggregateMetrics = [
     label: "Accuracy",
     precision: null,
     recall: null,
-    f1: 0.65,
-    support: 11057
+    f1: 0.80,
+    support: 20315
   },
   {
     label: "Macro avg",
-    precision: 0.65,
-    recall: 0.65,
-    f1: 0.65,
-    support: 11057
+    precision: 0.80,
+    recall: 0.80,
+    f1: 0.80,
+    support: 20315
   },
   {
     label: "Weighted avg",
-    precision: 0.65,
-    recall: 0.65,
-    f1: 0.65,
-    support: 11057
+    precision: 0.80,
+    recall: 0.80,
+    f1: 0.80,
+    support: 20315
   }
 ];
 

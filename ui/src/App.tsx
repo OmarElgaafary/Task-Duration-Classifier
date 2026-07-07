@@ -453,7 +453,7 @@ function App() {
                   </div>
                   <div className="flex items-center justify-between gap-3">
                     <span className="text-muted-foreground">Accuracy</span>
-                    <span className="font-medium">0.65</span>
+                    <span className="font-medium">0.80</span>
                   </div>
                 </div>
               </CardContent>
@@ -495,10 +495,10 @@ function App() {
                 <h3 className="text-2xl font-semibold">Model design</h3>
                 <p className="leading-7 text-muted-foreground">
                   The API recreates the core features expected by the trained
-                  pipeline: combined text, raw summary and description text,
-                  issue type, priority, issue-priority interaction, character
-                  counts, word counts, description presence, and a summary to
-                  description word ratio.
+                  pipeline: combined text, issue type, priority, project
+                  metadata, created date parts, character counts, word counts,
+                  description presence, labels, assignee status, votes, and
+                  watches.
                 </p>
                 <p className="leading-7 text-muted-foreground">
                   Logistic Regression is used as a lightweight baseline for
@@ -535,7 +535,7 @@ function App() {
             <SectionHeading
               eyebrow="Model evaluation"
               title="Actual metrics from the saved classification report"
-              description="The current test report shows 0.65 accuracy across 11,057 evaluated issues. The confusion matrix is useful because neighboring mistakes can still be operationally helpful."
+              description="The current test report shows 0.80 accuracy across 20,315 evaluated issues. The confusion matrix is useful because neighboring mistakes can still be operationally helpful."
             />
 
             <div className="mt-12 grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">

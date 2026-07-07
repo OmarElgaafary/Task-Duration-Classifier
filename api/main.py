@@ -26,6 +26,14 @@ class TaskInput(BaseModel):
     description: str = Field(default="")
     issuetype_name: str = Field(default="unknown")
     priority_name: str = Field(default="unknown")
+    project_key: str = Field(default="unknown")
+    project_category_name: str = Field(default="unknown")
+    created_year: int = Field(default=0)
+    created_month: int = Field(default=0)
+    labels_count: int = Field(default=0)
+    has_assignee: int = Field(default=0)
+    votes_votes: float = Field(default=0)
+    watches_watch_count: float = Field(default=0)
 
 
 def api_metadata():
@@ -73,12 +81,20 @@ async def predict_task_time(task: TaskInput):
         "total_text": f"{summary} {description}",
         "priority_name": task.priority_name,
         "issuetype_name": task.issuetype_name,
+        "project_key": task.project_key,
+        "project_category_name": task.project_category_name,
+        "created_year": task.created_year,
+        "created_month": task.created_month,
         "issue_priority": issue_priority,
         "summary_char_count": len(summary),
         "summary_word_count": summary_word_count,
         "description_char_count": len(description),
         "description_word_count": description_word_count,
         "has_description": int(description_word_count > 0),
+        "labels_count": task.labels_count,
+        "has_assignee": task.has_assignee,
+        "votes_votes": task.votes_votes,
+        "watches_watch_count": task.watches_watch_count,
         "summary_to_description_word_ratio": summary_to_description_word_ratio,
     }])
 

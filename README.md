@@ -109,6 +109,7 @@ Input fields:
 - `description`: optional longer issue details
 - `issuetype_name`: optional Jira issue type
 - `priority_name`: optional Jira priority
+- optional project, date, label, assignee, vote, and watch metadata
 
 At request time, the API creates a one-row pandas dataframe. It builds `total_text` from summary plus description, calculates text length features, fills optional metadata defaults, and sends the row into the trained scikit-learn pipeline.
 
@@ -117,10 +118,19 @@ The trained model currently uses these core features:
 - `total_text`
 - `priority_name`
 - `issuetype_name`
+- `project_key`
+- `project_category_name`
+- `created_year`
+- `created_month`
 - `summary_char_count`
 - `summary_word_count`
 - `description_char_count`
 - `description_word_count`
+- `has_description`
+- `labels_count`
+- `has_assignee`
+- `votes_votes`
+- `watches_watch_count`
 
 The API response now includes both the predicted class and model probabilities:
 
@@ -274,9 +284,11 @@ Current dataset row counts:
 Raw rows loaded in cleaning notebook:       1,149,323
 Rows after completed issue filtering:        945,103
 Rows after duplicate removal:                937,203
-Final balanced modeling rows:                 55,281
-Rows per final duration class:                18,427
-Held-out test rows:                           11,057
+Rows after consistency filtering:            258,722
+Rows after project/class cap:                218,629
+Final balanced modeling rows:                101,571
+Rows per final duration class:                33,857
+Held-out test rows:                           20,315
 ```
 
 Current evaluation output is stored in:
@@ -289,7 +301,7 @@ model_tests/confusion_matrix.png
 Current test accuracy:
 
 ```text
-Accuracy: 0.65
+Accuracy: 0.80
 ```
 
 Classification report:
@@ -297,13 +309,13 @@ Classification report:
 ```text
               precision    recall  f1-score   support
 
-Long-running       0.62      0.57      0.59      3685
-       Short       0.66      0.76      0.70      3686
-    Standard       0.66      0.62      0.64      3686
+Long-running       0.79      0.71      0.74      6771
+       Short       0.85      0.87      0.86      6772
+    Standard       0.76      0.81      0.79      6772
 
-    accuracy                           0.65     11057
-   macro avg       0.65      0.65      0.65     11057
-weighted avg       0.65      0.65      0.65     11057
+    accuracy                           0.80     20315
+   macro avg       0.80      0.80      0.80     20315
+weighted avg       0.80      0.80      0.80     20315
 ```
 
 The confusion matrix is available at `model_tests/confusion_matrix.png` and is also copied into the frontend assets for display.

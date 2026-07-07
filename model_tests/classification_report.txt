@@ -1,9 +1,9 @@
               precision    recall  f1-score   support
 
-Long-running       0.62      0.57      0.59      3685
-       Short       0.66      0.76      0.70      3686
-    Standard       0.66      0.62      0.64      3686
+Long-running       0.79      0.71      0.74      6771
+       Short       0.85      0.87      0.86      6772
+    Standard       0.76      0.81      0.79      6772
 
-    accuracy                           0.65     11057
-   macro avg       0.65      0.65      0.65     11057
-weighted avg       0.65      0.65      0.65     11057
+    accuracy                           0.80     20315
+   macro avg       0.80      0.80      0.80     20315
+weighted avg       0.80      0.80      0.80     20315

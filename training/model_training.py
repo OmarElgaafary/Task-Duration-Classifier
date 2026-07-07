@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, ConfusionMatrixDisplay
@@ -28,11 +29,19 @@ if not dataset_path.exists():
 
 df = pd.read_csv(dataset_path)
 
-df["total_text"] = (df["summary"].fillna("").astype(str) + " " + df["description"].fillna("").astype(str))
+df["total_text"] = (
+    df["summary"].fillna("").astype(str)
+    + " "
+    + df["description"].fillna("").astype(str)
+)
 
 categorical_features = [
     "priority_name",
     "issuetype_name",
+    "project_key",
+    "project_category_name",
+    "created_year",
+    "created_month",
 ]
 
 numeric_features = [
@@ -40,6 +49,11 @@ numeric_features = [
     "summary_word_count",
     "description_char_count",
     "description_word_count",
+    "has_description",
+    "labels_count",
+    "has_assignee",
+    "votes_votes",
+    "watches_watch_count",
 ]
 
 target_col = "duration_category"
@@ -63,6 +77,7 @@ preprocessor = ColumnTransformer(
                 ngram_range=(1, 2),
                 min_df=5,
                 max_df=0.9,
+                sublinear_tf=True,
             ),
             "total_text",
         ),
@@ -73,7 +88,12 @@ preprocessor = ColumnTransformer(
         ),
         (
             "num",
-            StandardScaler(),
+            Pipeline(
+                steps=[
+                    ("imputer", SimpleImputer(strategy="median")),
+                    ("scaler", StandardScaler()),
+                ]
+            ),
             numeric_features,
         ),
     ]
@@ -89,8 +109,9 @@ model = Pipeline(
                 C=1.0,
                 solver="saga",
                 penalty="l2",
-                max_iter=3000,
+                max_iter=1200,
                 class_weight=None,
+                n_jobs=-1,
                 random_state=42,
             )
         ),
