@@ -168,7 +168,7 @@ Example request:
   "summary": "Fix CORS error on /api/v2/users endpoint",
   "description": "Frontend requests are failing in production because the response is missing an Access-Control-Allow-Origin header.",
   "issuetype_name": "Bug",
-  "priority_name": "High"
+  "priority_name": "Major"
 }
 ```
 
