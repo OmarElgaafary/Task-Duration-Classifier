@@ -4,10 +4,8 @@
 
 ![Python](https://img.shields.io/badge/Python-3.14-blue)
 ![FastAPI](https://img.shields.io/badge/API-FastAPI-green)
-![React](https://img.shields.io/badge/UI-React%20%2B%20Vite-blue)
 ![Model](https://img.shields.io/badge/Model-Logistic%20Regression-purple)
 ![Docker](https://img.shields.io/badge/Deploy-Docker-informational)
-![Vercel](https://img.shields.io/badge/Deploy-Vercel-black)
 
 **Hugging Face:** https://huggingface.co/omaradly/jira-task-duration-classifier
 
