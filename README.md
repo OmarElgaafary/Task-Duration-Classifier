@@ -289,14 +289,3 @@ weighted avg       0.80      0.80      0.80     20315
 <img width="1920" height="1440" alt="confusion_matrix" src="https://github.com/user-attachments/assets/35d31196-a993-48bc-9365-c387aaf57595" />
 
 <img width="3000" height="1800" alt="classification_metrics_by_class" src="https://github.com/user-attachments/assets/c88fe771-9f16-4d4e-ad6a-37878d1a5ade" />
-
-## Future Improvements
-
-Useful next steps:
-
-- align API request-time feature generation with any new training features as the model evolves
-- compare Logistic Regression with calibrated linear models, XGBoost, or LightGBM
-- add ordinal-aware evaluation such as one-category-off accuracy
-- add automated API tests for `/health` and `/predict`
-- separate training-only dependencies from production API dependencies
-- add frontend CI for `npm run build` and `npm run lint`
