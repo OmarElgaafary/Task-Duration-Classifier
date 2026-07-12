@@ -13,7 +13,7 @@
 
 ## Project Goal
 
-Task Time Predictor is a full-stack machine learning project for estimating the duration category of software issues. The project includes:
+Task Time Predictor is a full-stack machine learning project for estimating the duration category of software issues. The project includes: 
 
 - data exploration, cleaning, and feature engineering notebooks
 - a scikit-learn Logistic Regression training pipeline
@@ -268,7 +268,7 @@ model_tests/confusion_matrix.png
 
 Current test accuracy:
 
-```text
+```text 
 Accuracy: 0.80
 ```
 
